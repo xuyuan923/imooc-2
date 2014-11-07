@@ -1,0 +1,24 @@
+extends ../layout
+block content
+    .container
+        .row(style="margin-bottom:70px")
+            .panel.panel-default
+                .panel-heading 注册用户信息
+                table.table.table-hover.table-bordered
+                    thead
+                        tr
+                            th 登录名
+                            th 注册时间
+                            th 查看
+                            th 更新
+                            th 删除
+                    tbody
+                each item in users
+                    tr(class="item-id-#{item._id}")
+                        td #{item.name}
+                        td #{moment(item.meta.updateAt).format('YYYY-MM-DD HH:mm:ss')}
+                        td: a.btn.btn-info.btn-xs(target="_blank",href="../movie/#{item._id}") 查看
+                        td: a.btn.btn-success.btn-xs(target="_blank",href="../admin/update/#{item._id}") 修改
+                        td
+                            button.btn.btn-danger.del.btn-xs(type="button",data-id="#{item._id}") 删除
+    script(src="/js/admin.js")
