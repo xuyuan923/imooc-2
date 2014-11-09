@@ -7,6 +7,7 @@
     .container
         .navbar-header
             a.navbar-brand(href="/") 重度科幻迷
+        // 如果用户存在，显示登出
         if user
             p.navbar-text.navbar-right
                 span 欢迎您：[#{user.name}]

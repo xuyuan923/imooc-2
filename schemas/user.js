@@ -37,9 +37,23 @@ UserSchema.pre('save',function(next){
             next();
         })
     });
-    next();
+    //next();
 })
 
+
+//实例方法，从实例里调
+UserSchema.methods = {
+    comparePassword: function(_password, cb) {
+        bcrypt.compare(_password, this.password, function(err, isMatch) {
+            if (err) {
+                return cb(err);
+            }
+            cb(null, isMatch);
+        });
+    }
+}
+
+//静态方法，从模型里来调
 UserSchema.statics = {
     fetch:function(cb){
         return this
