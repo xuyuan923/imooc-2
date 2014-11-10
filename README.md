@@ -2,6 +2,9 @@
 - [imooc视频地址](http://www.imooc.com/learn/197)
 - 本人根据视频敲的源代码，仅供参考
 
+## 项目架构
+- 基于MEAN架构(Mongo,Express,Angular,Node)
+
 ## 准备工作
 - 安装node&mongodb
 
