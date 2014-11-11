@@ -1,6 +1,7 @@
 /**
  * 电影列表
  */
+var mongoose = require('mongoose');
 var Movie = require('../models/movie');
 var _ = require('underscore');
 //电影详情页

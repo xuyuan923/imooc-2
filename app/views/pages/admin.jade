@@ -3,7 +3,7 @@ extends ../layout
 block content
 	.container
 		.row
-			form.form-horizotal(method="post",action="/admin/movie/new")
+			form.form-horizotal(method="post",action="/admin/movie")
 				input(type="hidden",name="movie[_id]",value="#{movie._id}")
 				.form-group
 					label.col-sm-2.control-label(for="inputTitle") 电影名字
