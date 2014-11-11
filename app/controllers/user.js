@@ -2,6 +2,19 @@
  * 用户注册登录模块
  */
 var User = require('../models/user');
+exports.showSignup = function(req,res){
+    res.render('signup',{
+        title: '注册页面'
+    })
+};
+
+exports.showSignin = function(req,res){
+    res.render('signin',{
+        title: '登录页面'
+    })
+};
+
+
 //注册
 exports.signup = function(req,res){
     var _user = req.body.user;
@@ -9,13 +22,13 @@ exports.signup = function(req,res){
     User.findOne({name:_user.name},function(err,user){
         if(err) console.log(err);
         if(user){
-            return res.redirect('/');
+            return res.redirect('/signin');
         }
         else{
             var user = new User(_user);
             user.save(function(err,user){
                 if(err) console.log(err);
-                res.redirect('/admin/userlist');
+                res.redirect('/');
             })
         }
     })
@@ -28,7 +41,7 @@ exports.signin = function(req,res){
     var password = _user.password;
     User.findOne({name:name},function(err,user){
         if(err) console.log(err);
-        if(!user) return res.redirect('/');
+        if(!user) return res.redirect('/signup');
         //调用实例方法
         user.comparePassword(password,function(err,isMatch){
             if(err) console.log(err);
@@ -37,7 +50,7 @@ exports.signin = function(req,res){
                 req.session.user = user;
                 return res.redirect('/');
             }else{
-                console.log('password err');
+                return res.redirect('/signin')
             }
         })
     })
@@ -52,11 +65,35 @@ exports.logout = function(req,res){
 
 //获取用户列表
 exports.list = function(req,res){
-    User.fetch(function(err,users){
-        if(err) console.log(err);
-        res.render('userlist',{
-            title: 'imooc 用户列表页',
-            users: users
+    var user = req.session.user;
+    if(!user){
+        return res.redirect('/signin');
+    }
+    if(user.role>10){
+        User.fetch(function(err,users){
+            if(err) console.log(err);
+            res.render('userlist',{
+                title: 'imooc 用户列表页',
+                users: users
+            })
         })
-    })
+    }
 };
+
+//midware for user
+exports.signinRequired = function(req,res,next){
+    var user = req.session.user;
+    if(!user){
+        return res.redirect('/signin')
+    }
+    next();
+}
+//管理员权限认证
+//从上面走下面，则已经登录了，无需判断是否登录
+exports.adminRequired = function(req,res,next){
+    var user = req.session.user;
+    if(user.role <= 10){
+        return res.redirect('/')
+    }
+    next()
+}

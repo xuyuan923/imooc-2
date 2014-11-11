@@ -16,13 +16,16 @@ module.exports = function(app){
     //用户
     app.post('/user/signup',User.signup);
     app.post('/user/signin',User.signin);
+    app.get('/signin',User.showSignin);
+    app.get('/signup',User.showSignup);
     app.get('/logout',User.logout);
-    app.get('/admin/userlist',User.list);
+    //判断登录是否中间件
+    app.get('/admin/user/list',User.signinRequired,User.adminRequired,User.list);
     //电影
     app.get('/movie/:id',Movie.detail);
-    app.get('/admin/new',Movie.new);
-    app.get('/admin/update/:id',Movie.update);
-    app.get('/admin/movie',Movie.save);
-    app.get('/admin/list',Movie.list);
-    app.post('/admin/list',Movie.del);
+    app.get('/admin/movie/new', User.signinRequired, User.adminRequired, Movie.new);
+    app.get('/admin/movie/update/:id',User.signinRequired,User.adminRequired,Movie.update);
+    app.get('/admin/movie',User.signinRequired,User.adminRequired,Movie.save);
+    app.get('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.list);
+    app.post('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.del);
 }
