@@ -4,6 +4,7 @@
 var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
 var Movie = require('../app/controllers/movie');
+var Comment = require('../app/controllers/comment');
 module.exports = function(app){
     //预处理用户
     app.use(function(req,res,next){
@@ -28,4 +29,6 @@ module.exports = function(app){
     app.post('/admin/movie',User.signinRequired,User.adminRequired,Movie.save);
     app.get('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.list);
     app.post('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.del);
+    //comment
+    app.post('/user/comment',User.signinRequired,Comment.save);
 }

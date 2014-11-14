@@ -18,4 +18,4 @@
 - 进入mongodb/bin目录下执行`./mongo`打开数据库，执行`use [数据库名]`查看数据库
 
 ## 一些mongodb查询语法
-- 更新用户信息字段：db.users.update({"_id":ObjectId("545f2cbca017df430415d468")},{$set:{role:51}})
+- 更新用户信息字段：db.users.update({"_id":ObjectId("5462e471a89b09af16c5d3aa")},{$set:{role:0,workId:78744,jobDesc:'前端开发工程师'}})

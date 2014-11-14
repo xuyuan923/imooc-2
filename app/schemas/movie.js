@@ -1,5 +1,4 @@
 var mongoose = require('mongoose')
-
 var MovieSchema = new mongoose.Schema({
 	doctor:String,
 	title:String,
@@ -47,4 +46,4 @@ MovieSchema.statics = {
 	}
 }
 
-module.exports = MovieSchema
+module.exports = MovieSchema;

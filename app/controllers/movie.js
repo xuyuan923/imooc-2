@@ -3,14 +3,28 @@
  */
 var mongoose = require('mongoose');
 var Movie = require('../models/movie');
+var Comment = require('../models/comment');
 var _ = require('underscore');
 //电影详情页
 exports.detail = function (req, res) {
     var id = req.params.id;
     Movie.findById(id, function (err, movie) {
-        res.render('detail', {
-            title: movie.title,
-            movie: movie
+        //callback方式处理
+        //查询comment哪些movie的id和详情页的movie是同一个
+        Comment
+            .find({movie:id})
+            //找到from里的ObjectId,去User表里查
+            .populate('from','name')
+            .populate('reply.from reply.to','name')
+            .exec(function(err,comments){
+                //comments是个数组
+                console.log('comments:');
+                console.log(comments);
+                res.render('detail', {
+                    title: 'imooc 详情页',
+                    movie: movie,
+                    comments: comments
+                })
         })
     })
 };
