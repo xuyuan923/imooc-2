@@ -5,6 +5,7 @@ var Index = require('../app/controllers/index');
 var User = require('../app/controllers/user');
 var Movie = require('../app/controllers/movie');
 var Comment = require('../app/controllers/comment');
+var Category = require('../app/controllers/category');
 module.exports = function(app){
     //预处理用户
     app.use(function(req,res,next){
@@ -31,4 +32,9 @@ module.exports = function(app){
     app.post('/admin/movie/list',User.signinRequired,User.adminRequired,Movie.del);
     //comment
     app.post('/user/comment',User.signinRequired,Comment.save);
+    //Catetory
+    app.get('/admin/category/new', User.signinRequired, User.adminRequired, Category.new);
+    app.post('/admin/category',User.signinRequired,User.adminRequired,Category.save);
+    app.get('/admin/category/list',User.signinRequired,User.adminRequired,Category.list);
+
 }
